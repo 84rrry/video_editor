@@ -569,8 +569,11 @@ class _TrimSliderState extends State<TrimSlider>
         _createTrimRect();
       }
 
+      // When extended, use _fullLayout.width to enable horizontal scrolling
+      // When not extended, use full parent width to ensure the right handle
+      // (which is at _fullLayout.width + _horizontalMargin) is within bounds
       return SizedBox(
-          width: _fullLayout.width,
+          width: _isExtendTrim ? _fullLayout.width : contrainst.maxWidth,
           child: Stack(children: [
             NotificationListener<ScrollNotification>(
               onNotification: (scrollNotification) {
