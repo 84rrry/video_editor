@@ -106,37 +106,37 @@ class _ThumbnailSliderState extends State<ThumbnailSlider> {
         stream: _stream,
         builder: (_, snapshot) {
           final data = snapshot.data;
-          return snapshot.hasData
-              ? ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  padding: EdgeInsets.zero,
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemCount: _neededThumbnails,
-                  itemBuilder: (_, i) => ValueListenableBuilder<TransformData>(
-                    valueListenable: _transform,
-                    builder: (_, transform, __) {
-                      final index =
-                          getBestIndex(_neededThumbnails, data!.length, i);
+          if (!snapshot.hasData || data == null || data.isEmpty) {
+            return const SizedBox();
+          }
+          return ListView.builder(
+            scrollDirection: Axis.horizontal,
+            padding: EdgeInsets.zero,
+            physics: const NeverScrollableScrollPhysics(),
+            itemCount: _neededThumbnails,
+            itemBuilder: (_, i) => ValueListenableBuilder<TransformData>(
+              valueListenable: _transform,
+              builder: (_, transform, __) {
+                final index = getBestIndex(_neededThumbnails, data.length, i);
 
-                      return Stack(
-                        children: [
-                          _buildSingleThumbnail(
-                            data[0],
-                            transform,
-                            isPlaceholder: true,
-                          ),
-                          if (index < data.length)
-                            _buildSingleThumbnail(
-                              data[index],
-                              transform,
-                              isPlaceholder: false,
-                            ),
-                        ],
-                      );
-                    },
-                  ),
-                )
-              : const SizedBox();
+                return Stack(
+                  children: [
+                    _buildSingleThumbnail(
+                      data[0],
+                      transform,
+                      isPlaceholder: true,
+                    ),
+                    if (index < data.length)
+                      _buildSingleThumbnail(
+                        data[index],
+                        transform,
+                        isPlaceholder: false,
+                      ),
+                  ],
+                );
+              },
+            ),
+          );
         },
       );
     });

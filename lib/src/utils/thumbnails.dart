@@ -23,12 +23,11 @@ Stream<List<Uint8List>> generateTrimThumbnails(
       );
       if (bytes != null) {
         byteList.add(bytes);
+        yield byteList;
       }
     } catch (e) {
       debugPrint(e.toString());
     }
-
-    yield byteList;
   }
 }
 
