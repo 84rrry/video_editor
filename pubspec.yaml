@@ -1,3 +1,4 @@
+publish_to: none
 name: video_editor
 version: 3.0.0
 description: |
@@ -18,7 +19,10 @@ dependencies:
   path_provider: ^2.0.12
   transparent_image: ^2.0.1 # show fade-in placeholder in thumbnails generation
   video_player: ^2.6.1
-  video_thumbnail: ^0.5.3
+  video_thumbnail:
+   git:
+      url: https://github.com/justsoft/video_thumbnail.git
+      ref: refs/pull/190/head
 
 dev_dependencies:
   flutter_test:
