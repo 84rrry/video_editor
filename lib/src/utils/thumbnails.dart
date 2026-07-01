@@ -71,12 +71,17 @@ Future<CoverData> generateSingleCoverThumbnail(
   int timeMs = 0,
   int quality = 10,
 }) async {
-  final Uint8List? thumbData = await VideoThumbnail.thumbnailData(
-    imageFormat: ImageFormat.JPEG,
-    video: filePath,
-    timeMs: timeMs,
-    quality: quality,
-  );
+  try {
+    final Uint8List? thumbData = await VideoThumbnail.thumbnailData(
+      imageFormat: ImageFormat.JPEG,
+      video: filePath,
+      timeMs: timeMs,
+      quality: quality,
+    );
 
-  return CoverData(thumbData: thumbData, timeMs: timeMs);
+    return CoverData(thumbData: thumbData, timeMs: timeMs);
+  } catch (e) {
+    debugPrint(e.toString());
+    return CoverData(thumbData: null, timeMs: timeMs);
+  }
 }
